@@ -14,20 +14,28 @@ router.all("*", (req, res, next) => {
 
 /* GET home page. */
 router.get("/", (req, res) => {
-  // const newsData = new News({
-  //   title: "Tytuł testowy",
-  //   description: "Opis"
-  // });
-
-  // newsData.save(err => {
-  //   console.log(err);
-  // });
-
   res.render("admin/index", { title: "Admin" });
 });
 
 router.get("/news/add", (req, res) => {
-  res.render("admin/news-form", { title: "Dodaj news" });
+  res.render("admin/news-form", { title: "Dodaj news", body: {}, errors: {} });
+});
+
+router.post("/news/add", (req, res) => {
+  const body = req.body;
+
+  const newsData = new News(body);
+  const errors = newsData.validateSync();
+
+  newsData.save(err => {
+    if (err) {
+      res.render("admin/news-form", { title: "Dodaj news", errors, body });
+      return;
+    } else {
+      res.redirect("/admin");
+      return;
+    }
+  });
 });
 
 module.exports = router;
