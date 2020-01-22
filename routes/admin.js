@@ -14,7 +14,9 @@ router.all("*", (req, res, next) => {
 
 /* GET home page. */
 router.get("/", (req, res) => {
-  res.render("admin/index", { title: "Admin" });
+  News.find({}, (err, data) => {
+    res.render("admin/index", { title: "Admin", data });
+  });
 });
 
 router.get("/news/add", (req, res) => {
@@ -35,6 +37,12 @@ router.post("/news/add", (req, res) => {
       res.redirect("/admin");
       return;
     }
+  });
+});
+
+router.get("/news/delete/:id", (req, res) => {
+  News.findByIdAndDelete(req.params.id, err => {
+    res.redirect("/admin");
   });
 });
 
