@@ -5,11 +5,22 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const config = require("./config");
+const mongoose = require("mongoose");
+
+//connection to data base
+mongoose.connect(config.db, { useNewUrlParser: true });
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", function() {
+  console.log("DB connected...");
+});
 
 const indexRouter = require("./routes/index");
 const newsRouter = require("./routes/news");
 const quizRouter = require("./routes/quiz");
 const adminRouter = require("./routes/admin");
+
+//mongodb+srv://danielj:nWEJaHweRazgx7QX@cluster0-ikpr5.mongodb.net/test?retryWrites=true&w=majority
 
 const app = express();
 
