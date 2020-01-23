@@ -19,6 +19,7 @@ const indexRouter = require("./routes/index");
 const newsRouter = require("./routes/news");
 const quizRouter = require("./routes/quiz");
 const adminRouter = require("./routes/admin");
+const apiRouter = require("./routes/api");
 
 //mongodb+srv://danielj:nWEJaHweRazgx7QX@cluster0-ikpr5.mongodb.net/test?retryWrites=true&w=majority
 
@@ -52,6 +53,7 @@ app.use("/", indexRouter);
 app.use("/news", newsRouter);
 app.use("/quiz", quizRouter);
 app.use("/admin", adminRouter);
+app.use("/api", apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
